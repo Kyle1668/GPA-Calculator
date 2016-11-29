@@ -18,11 +18,11 @@ C++ GPA Calculator
 #include <string>
 
 
-float calcCreditsPossible(int, float[]);
-float calcCreditsEarned(int, char[], float[]);
 
 float calculateGPA(int, char[], float[], std::string[]);
 void getClassData(int, char[], float[], std::string[]);
+float calcCreditsEarned(int, char[], float[]);
+float calcCreditsPossible(int, float[]);
 void printInstructions();
 int getNumClasses();
 void printGPA(float);
