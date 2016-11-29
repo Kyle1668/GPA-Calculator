@@ -6,7 +6,7 @@ C++ GPA Calculator
  : This is my first side project with C++ as well as my first experience with arrays of pointers. The 
  : program prints a prompt requesting a number of courses to be graded by the user. The program 
  : then asks the user for a number of grades and credits per class which are stored in corresponding 
- : arrays. The program calculates and prints the user's GPA using the following formula on line 133.
+ : arrays. The program calculates and prints the user's GPA using the following formula on line 108.
  
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 */
@@ -18,9 +18,11 @@ C++ GPA Calculator
 #include <string>
 
 
+float calcCreditsPossible(int, float[]);
+float calcCreditsEarned(int, char[], float[]);
 
-void getClassData(int, char[], float[], std::string[]);
 float calculateGPA(int, char[], float[], std::string[]);
+void getClassData(int, char[], float[], std::string[]);
 void printInstructions();
 int getNumClasses();
 void printGPA(float);
@@ -99,14 +101,37 @@ void getClassData(int classAmount, char letterGrade[], float creditHours[], std:
 
 float calculateGPA(int classAmount, char letterGrade[], float creditHours[], std::string courseName[])
 {
-    float totalPossibleCredits = 0.0,
-            totalCreditsEarned = 0.0,
-            finalGPA = 0.0;
+    float finalGPA = 0.0,
+            creditsEarned = calcCreditsEarned(classAmount, letterGrade, creditHours),
+            totalCreditsPossible = calcCreditsPossible(classAmount, creditHours);
+    
+    finalGPA = creditsEarned / totalCreditsPossible;    // The final GPA is calculated with this formula.
+    
+    return finalGPA;
+}
+
+
+
+float calcCreditsPossible(int classAmount, float creditHours[])
+{
+    float totalPossibleCredits = 0.0;
     
     for (int i = 0; i < classAmount; i++)
     {
         totalPossibleCredits += creditHours[i];  // Calculates total possible credits
-        
+    }
+    
+    return totalPossibleCredits;
+}
+
+
+
+float calcCreditsEarned(int classAmount, char letterGrade[], float creditHours[])
+{
+    float totalCreditsEarned = 0.0;
+    
+    for (int i = 0; i < classAmount; i++)
+    {
         // Switch calculates credits earned depending on the letter grade recieved and adds to the sum of totalCreditsEarned.
         switch (letterGrade[i])
         {
@@ -130,9 +155,7 @@ float calculateGPA(int classAmount, char letterGrade[], float creditHours[], std
         }
     }
     
-    finalGPA = totalCreditsEarned  / totalPossibleCredits;  // The final GPA is calculated with this formula.
-    
-    return finalGPA;
+    return totalCreditsEarned;
 }
 
 
@@ -140,7 +163,7 @@ float calculateGPA(int classAmount, char letterGrade[], float creditHours[], std
 void printGPA(float GPA)
 {
     std::cout << "\n---------------------" << std::endl;
-    std::cout << "Final GPA : " << std::setprecision(3)<< GPA << std::endl;
+    std::cout << "Final GPA : " << std::setprecision(2) << std::fixed << GPA << std::endl;
     std::cout << "---------------------\n" << std::endl;
 }
 
