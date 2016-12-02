@@ -6,7 +6,7 @@ C++ GPA Calculator
  : This is my first side project with C++ as well as my first experience with arrays of pointers. The 
  : program prints a prompt requesting a number of courses to be graded by the user. The program 
  : then asks the user for a number of grades and credits per class which are stored in corresponding 
- : arrays. The program calculates and prints the user's GPA using the following formula on line 108.
+ : arrays. The program calculates and prints the user's GPA using the following formula on line 109.
  
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 */
@@ -15,6 +15,7 @@ C++ GPA Calculator
 
 #include <iostream>
 #include <iomanip>
+#include <ctype.h>
 #include <string>
 
 
@@ -101,9 +102,9 @@ void getClassData(int classAmount, char letterGrade[], float creditHours[], std:
 
 float calculateGPA(int classAmount, char letterGrade[], float creditHours[], std::string courseName[])
 {
-    float finalGPA = 0.0,
-            creditsEarned = calcCreditsEarned(classAmount, letterGrade, creditHours),
-            totalCreditsPossible = calcCreditsPossible(classAmount, creditHours);
+    float finalGPA = 0.0;
+    float totalCreditsPossible = calcCreditsPossible(classAmount, creditHours);
+    float creditsEarned = calcCreditsEarned(classAmount, letterGrade, creditHours);
     
     finalGPA = creditsEarned / totalCreditsPossible;    // The final GPA is calculated with this formula.
     
@@ -133,22 +134,17 @@ float calcCreditsEarned(int classAmount, char letterGrade[], float creditHours[]
     for (int i = 0; i < classAmount; i++)
     {
         // Switch calculates credits earned depending on the letter grade recieved and adds to the sum of totalCreditsEarned.
-        switch (letterGrade[i])
+        switch (toupper(letterGrade[i]))
         {
-            case 'A':
-                totalCreditsEarned += creditHours[i] * 4.0;
+            case 'A': totalCreditsEarned += creditHours[i] * 4.0;
                 break;
-            case 'B':
-                totalCreditsEarned += creditHours[i] * 3.0;
+            case 'B': totalCreditsEarned += creditHours[i] * 3.0;
                 break;
-            case 'C':
-                totalCreditsEarned += creditHours[i] * 2.0;
+            case 'C': totalCreditsEarned += creditHours[i] * 2.0;
                 break;
-            case 'D':
-                totalCreditsEarned += creditHours[i] * 1.0;
+            case 'D': totalCreditsEarned += creditHours[i] * 1.0;
                 break;
-            case 'F':
-                totalCreditsEarned += creditHours[i] * 0.0;
+            case 'F': totalCreditsEarned += creditHours[i] * 0.0;
                 break;
             default: std::cout << "Error in Switch" << std::endl;
                 break;
@@ -162,7 +158,7 @@ float calcCreditsEarned(int classAmount, char letterGrade[], float creditHours[]
 
 void printGPA(float GPA)
 {
-    std::cout << "\n---------------------" << std::endl;
+    std::cout << "\n---------------------" << std::endl;    // The GPA is printed to the hundredths place.
     std::cout << "Final GPA : " << std::setprecision(2) << std::fixed << GPA << std::endl;
     std::cout << "---------------------\n" << std::endl;
 }
