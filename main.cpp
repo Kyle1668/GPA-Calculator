@@ -18,6 +18,14 @@ C++ GPA Calculator
 #include <ctype.h>
 #include <string>
 
+using namespace std;  //add this header here and, it will give you nice and pricese code
+/* the use of this "using namespace std;" is when you are using once in your code as a header around this place, you should type 
+again and again many times as i in your code 
+
+i recommed you to remove all the "std" in the code and use " using namespace std; once at the header location
+
+*/
+// generally your code is very intereseting
 
 
 float calculateGPA(int, char[], float[], std::string[]);
